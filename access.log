@@ -97,3 +97,4 @@ POST /users/new 400 142 - 6.300 ms
 ::1 - - [07/Aug/2022:11:43:12 +0000] "POST /tickets/62ef958c77e197d4f8a2723c/markasclosed HTTP/1.1" 403 33 "-" "PostmanRuntime/7.29.0"
 ::1 - - [07/Aug/2022:11:43:37 +0000] "POST /tickets/62ef958c77e197d4f8a2723c/markasclosed HTTP/1.1" 403 33 "-" "PostmanRuntime/7.29.0"
 ::1 - - [07/Aug/2022:11:44:48 +0000] "POST /tickets/62ef958c77e197d4f8a2723c/markasclosed HTTP/1.1" 200 36 "-" "PostmanRuntime/7.29.0"
+::1 - - [07/Aug/2022:11:50:39 +0000] "POST /tickets/62ef95b877e197d4f8a27242/markasclosed HTTP/1.1" 401 23 "-" "PostmanRuntime/7.29.0"
