@@ -62,7 +62,7 @@ exports.closeTicket = async(req, res, next) => {
         
         //GET PRIORITY OF CURRENT TICKET ID
         const ticket = await Ticket.findById(ticketId)
-        const currentTicketPriority = ticket.priority        
+        const currentTicketPriority = ticket.priority            
         
     // -------- PRIORITY CHECK --------------
         
@@ -73,7 +73,7 @@ exports.closeTicket = async(req, res, next) => {
         const priorityCheckList = employeeTickets.filter(item => item._id != ticketId).map(item => item.priority)               
         
         //CHECK FOR LOW PRIORITY TICKETS       
-        if(currentTicketPriority == 'low'){
+        if(currentTicketPriority == 'low'){            
             if(priorityCheckList.includes('medium') || priorityCheckList.includes('high')){
                 let higherPriorityTickets = []
                 
@@ -83,18 +83,17 @@ exports.closeTicket = async(req, res, next) => {
         }
         
         //CHECK FOR MEDIUM PRIORITY TICKETS
-        if(currentTicketPriority == 'medium' && priorityCheckList.includes('high')){            
+        if(currentTicketPriority == 'medium' && priorityCheckList.includes('high')){                      
             let higherPriorityTickets = []
             
             higherPriorityTickets = employeeTickets.filter(item => item.priority == 'high')    
             return res.status(200).json({msg: 'A higher priority task remains to be closed', tickets: higherPriorityTickets})         
         }
         
-        //IF HIGH, CLOSE TICKET
-        if(currentTicketPriority == 'high'){
-            await Ticket.findByIdAndUpdate(ticketId, {status: 'close'})
-            return res.status(200).json({msg: 'Ticket closed successfully'})
-        }
+        //IF NO ERROR, CLOSE TICKET        
+        await Ticket.findByIdAndUpdate(ticketId, {status: 'close'})
+        return res.status(200).json({msg: 'Ticket closed successfully'})
+        
 
     }catch(err){
         next(err)
