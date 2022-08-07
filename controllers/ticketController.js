@@ -16,8 +16,11 @@ exports.newTicket = async (req, res, next) => {
         //GET BODY DATA//
         const { title, description } = req.body
 
-        //ASSIGN TICKET TO RANDOMLY SELECTED EMPLOYEE
+        //ASSIGN TICKET TO RANDOMLY SELECTED EMPLOYEE, IF EMPLOYEE EXISTS
         const employees = await User.find({role: 'employee'}).select('username')
+
+        if(employees.length == 0) return res.status(400).json({msg: 'No Employees yet. Please create employees first'})
+
         const employeeIds = employees.map(item => item._id)
         const randomId = Math.floor((Math.random() * employeeIds.length))
 
@@ -62,13 +65,15 @@ exports.closeTicket = async(req, res, next) => {
         
         //GET PRIORITY OF CURRENT TICKET ID
         const ticket = await Ticket.findById(ticketId)
-        const currentTicketPriority = ticket.priority            
+        const currentTicketPriority = ticket.priority           
+    // ------ CHECK IF TICKET ALREADY CLOSED ------ //
+        if(ticket.status == 'close') return res.status(200).json({msg: 'This Ticket has already been closed'})     
         
     // -------- PRIORITY CHECK --------------
         
-        //GET PRIORITY OF ALL TICKETS OF THAT EMPLOYEE MINUS THE CURRENT TICKET
+        //GET PRIORITY OF ALL OPEN TICKETS OF THAT EMPLOYEE MINUS THE CURRENT TICKET
         const employeeId = ticket.assignedTo
-        const employeeTickets = await Ticket.find({assignedTo: employeeId})
+        const employeeTickets = await Ticket.find({assignedTo: employeeId, status: 'open'})
         
         const priorityCheckList = employeeTickets.filter(item => item._id != ticketId).map(item => item.priority)               
         
