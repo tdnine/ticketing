@@ -16,18 +16,20 @@ const app = express()
 
 //route import
 const userRouter = require('./routes/user')
+const ticketRouter = require('./routes/ticket')
 
 //write morgan logs to a file
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 
 //bodyparser, morgan middleware
-app.use(morgan('tiny', { stream: accessLogStream }))
+app.use(morgan('combined', { stream: accessLogStream }))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 //routes
 app.use('/users', userRouter)
+app.use('/tickets', ticketRouter)
 
 // Error Handling middleware
 app.use(errorHandler.logErrors)
