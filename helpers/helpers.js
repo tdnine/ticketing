@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken')
+const User = require('../model/userModel')
+const Ticket = require('../model/ticketModel')
 
 exports.verifyToken = (req, res, next) => {   
     const debug = require('debug')('ticketing: verifyToken') 
@@ -30,6 +32,26 @@ exports.authorizeRole = (role) =>{
                     
         next()
     }
+}
+
+exports.authorizeResource = async (req, res, next) => {                      
+    try{
+        const debug = require('debug')('ticketing: authorizeResource') 
+        //GET LOGGED IN USER
+        let username = req.user.username
+        let user = await User.findOne({username})        
+    
+        //GET RESOURCE INFO
+        let ticket = await Ticket.findById(req.params.ticketId).populate('assignedTo')
+                
+        //CHECK IF RESOURCE AUTHORIZED
+        return (JSON.stringify(ticket.assignedTo._id) == JSON.stringify(user._id) || user.role == 'admin') 
+        ? next()      
+        : res.status(403).json({msg: `Resource Not Authorized`})
+                         
+    }catch(err){
+        next(err)
+    }          
 }
 
 

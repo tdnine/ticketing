@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 
 exports.newUser = async (req, res, next) => {
     try{
-        // -------------------------------- VALIDATION -------------------------------- //
+        //VALIDATION//
         const errors = validationResult(req)
         
         if(!errors.isEmpty()) {                        
@@ -15,7 +15,7 @@ exports.newUser = async (req, res, next) => {
 
         //GET BODY DATA
         const {username, role} = req.body
-
+        
         //GENERATE JWT TOKEN                    
         const token = jwt.sign( req.body, process.env.ACCESS_TOKEN_SECRET_KEY, {expiresIn : '1h'} )
 

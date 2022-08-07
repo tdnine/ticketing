@@ -93,3 +93,13 @@ exports.closeTicket = async(req, res, next) => {
     }
 }
 
+exports.deleteTicket = async(req, res, next) => {
+    try{
+        const {ticketId} = req.params
+
+        await Ticket.findByIdAndDelete(ticketId)
+        res.status(200).json({msg: 'Ticket deleted successfully'})
+    }catch(err){
+        next(err)
+    }
+}
