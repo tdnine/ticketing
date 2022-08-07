@@ -1,0 +1,10 @@
+GET /users/new 304 - - 4.945 ms
+GET /users/new 304 - - 3.426 ms
+POST /users/new 400 114 - 45.803 ms
+POST /users/new 200 36 - 5.666 ms
+POST /users/new 201 191 - 49.292 ms
+POST /users/new 400 118 - 8.313 ms
+POST /users/new 400 118 - 4.611 ms
+POST /users/new 400 195 - 33.358 ms
+POST /users/new 400 139 - 33.510 ms
+POST /users/new 400 142 - 6.300 ms
