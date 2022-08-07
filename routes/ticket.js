@@ -10,8 +10,8 @@ router.get('/all', ticketController.ticketList)
 
 router.get('/', ticketController.ticketList)
 
-router.post('/:ticketId/markasclosed', verifyToken, authorizeResource, ticketController.closeTicket)
+router.post('/markasclosed', verifyToken, authorizeResource, ticketController.closeTicket)
 
-router.post('/:ticketId/delete', verifyToken, authorizeRole(['admin']), ticketController.deleteTicket)
+router.post('/delete', verifyToken, authorizeRole(['admin']), ticketController.deleteTicket)
 
 module.exports = router

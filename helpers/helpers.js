@@ -42,7 +42,7 @@ exports.authorizeResource = async (req, res, next) => {
         let user = await User.findOne({username})        
     
         //GET RESOURCE INFO
-        let ticket = await Ticket.findById(req.params.ticketId).populate('assignedTo')
+        let ticket = await Ticket.findById(req.body.ticketId).populate('assignedTo')
                 
         //CHECK IF RESOURCE AUTHORIZED
         return (JSON.stringify(ticket.assignedTo._id) == JSON.stringify(user._id) || user.role == 'admin') 
